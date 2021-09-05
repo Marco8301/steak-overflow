@@ -7,7 +7,6 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 trait SluggableTrait
 {
-
     /**
      * @ORM\Column(type="string", length=255)
      */
