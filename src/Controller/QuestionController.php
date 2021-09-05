@@ -24,6 +24,20 @@ class QuestionController extends AbstractController
     }
 
     /**
+     * @Route("/question/{id<[0-9]+>}/{slug}", name="app_question_show", methods={"GET"})
+     */
+    public function show(Question $question): Response
+    {
+        if (null === $question) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('question/show.html.twig', [
+            'question' => $question
+        ]);
+    }
+
+    /**
      * @Route("/question/create", name="app_question_create", methods={"GET", "POST"})
      */
     public function create(Request $request, EntityManagerInterface $em): Response
