@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Questions' %}
+
+{% block body %}
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
+        <h1 class="">Top Questions</h1>
+        <a class="btn btn-primary" href="{{ path('app_question_create') }}" >Nouvelle question</a>
+    </div>
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            {% for question in questions %}
+                <article class="row my-3">
+                    <div class="col-12 col-sm-3 d-flex flex-row align-items-center justify-content-between flex-sm-column py-sm-3 my-sm-3 border rounded">
+                        <span class="badge bg-{{ question.isClosed ? 'success' : 'warning text-dark' }}">
+                            {{ question.isClosed ? 'Résolue' : 'Ouverte' }}
+                        </span>
+                        <h5>0 Réponses</h5>
+                    </div>
+                    <div class="col-12 col-sm-9 p-sm-3 my-sm-3 border rounded">
+                        <h3>{{ question.title }}</h3>
+                        <p>{{ question.content }}</p>
+                    </div>
+
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

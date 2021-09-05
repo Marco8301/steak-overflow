@@ -2,12 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>{% block title 'Welcome to Steak Overflow' %}</title>
     {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
     {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
 </head>
 <body>
 {{ include('partials/_nav.html.twig') }}
-{% block body %}{% endblock %}
+{{ include('partials/_flash.html.twig') }}
+<div class="container mt-5 px-4">
+    {% block body %}{% endblock %}
+</div>
 </body>
 </html>
