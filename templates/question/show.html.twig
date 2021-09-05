@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Steak Overflow - '~question.title %}
+
+{% block body %}
+    <div class="row">
+        <a class="btn btn-outline-dark ms-auto" href="{{ path('app_question_index') }}" style="width: 150px;">Retour</a>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-10 p-0 mx-auto card">
+            <h5 class="card-header">{{ question.title }}</h5>
+            <div class="card-body py-3">
+                <p class="card-text">{{ question.content }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
