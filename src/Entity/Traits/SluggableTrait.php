@@ -10,7 +10,7 @@ trait SluggableTrait
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $slug;
+    private string $slug;
 
     public function getSlug(): ?string
     {
@@ -31,6 +31,5 @@ trait SluggableTrait
     public function createSlug(): void
     {
         $this->setSlug((new AsciiSlugger())->slug($this->getTitle()));
-
     }
 }

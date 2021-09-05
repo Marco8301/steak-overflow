@@ -28,7 +28,7 @@ class QuestionController extends AbstractController
      */
     public function show(Question $question): Response
     {
-        if (null === $question) {
+        if (null == $question) {
             throw $this->createNotFoundException();
         }
 
@@ -64,7 +64,7 @@ class QuestionController extends AbstractController
      */
     public function edit(Request $request, EntityManagerInterface $em, Question $question): Response
     {
-        if (null === $question) {
+        if (null == $question) {
             throw $this->createNotFoundException();
         }
 
@@ -90,11 +90,11 @@ class QuestionController extends AbstractController
      */
     public function delete(Request $request, EntityManagerInterface $em, Question $question): Response
     {
-        if (null === $question) {
+        if (null == $question) {
             throw $this->createNotFoundException();
         }
 
-        if ($this->isCsrfTokenValid('question.delete' . $question->getId(), $request->request->get('csrf_token'))) {
+        if ($this->isCsrfTokenValid('question.delete' . $question->getId(), (string) $request->request->get('csrf_token'))) {
             $em->remove($question);
             $em->flush();
             $this->addFlash('success', 'Question supprimée avec succès');

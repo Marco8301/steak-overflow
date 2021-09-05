@@ -9,12 +9,12 @@ trait TimestampableTrait
     /**
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP" })
      */
-    private $createdAt;
+    private \DateTimeInterface $createdAt;
 
     /**
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP" })
      */
-    private $updatedAt;
+    private \DateTimeInterface $updatedAt;
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -47,8 +47,8 @@ trait TimestampableTrait
     public function updateTimestamps(): void
     {
         if (null === $this->getCreatedAt()) {
-            $this->setCreatedAt(new \DateTimeImmutable);
+            $this->setCreatedAt(new \DateTimeImmutable());
         }
-        $this->setUpdatedAt(new \DateTimeImmutable);
+        $this->setUpdatedAt(new \DateTimeImmutable());
     }
 }
