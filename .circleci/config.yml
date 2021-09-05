@@ -42,7 +42,10 @@ jobs:
           paths:
             - ./vendor
 
-      # run tests with phpunit
+      - run:
+          name: "Coding Standards"
+          command: composer coding-standards
+
       - run:
           name: "Run tests"
           command: composer test
