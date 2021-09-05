@@ -84,4 +84,22 @@ class QuestionController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    /**
+     * @Route("/question/delete/{id<[0-9]+>}", name="app_question_delete", methods={"GET", "DELETE"})
+     */
+    public function delete(Request $request, EntityManagerInterface $em, Question $question): Response
+    {
+        if (null === $question) {
+            throw $this->createNotFoundException();
+        }
+
+        if ($this->isCsrfTokenValid('question.delete' . $question->getId(), $request->request->get('csrf_token'))) {
+            $em->remove($question);
+            $em->flush();
+            $this->addFlash('success', 'Question supprimée avec succès');
+        }
+
+        return $this->redirectToRoute('app_question_index');
+    }
 }
