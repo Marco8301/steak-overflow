@@ -26,6 +26,7 @@ trait SluggableTrait
 
     /**
      * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
     public function createSlug(): void
     {

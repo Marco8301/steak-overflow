@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Create Question' %}
+{% block title 'Edit Question' %}
 
 {% block body %}
     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
@@ -8,14 +8,14 @@
     </div>
     <div class="row mt-3">
         <div class="col-md-8 mx-auto">
-            <h1 class="text-center">Nouvelle Question</h1>
+            <h1 class="text-center">Editer une Question</h1>
             {{ form_start(form) }}
             {{ form_row(form.title) }}
             {{ form_label(form.content) }}
             {{ form_help(form.content) }}
             {{ form_widget(form.content) }}
             {{ form_errors(form.content) }}
-            <button class="col-12 btn btn-primary btn-lg mt-3" type="submit">Soumettre la question</button>
+            <button class="col-12 btn btn-primary btn-lg mt-3" type="submit">Confirmer</button>
             {{ form_end(form) }}
         </div>
     </div>
