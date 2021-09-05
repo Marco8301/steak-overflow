@@ -23,26 +23,26 @@ class Question
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le titre de votre question ne peut être vide")
      * @Assert\Length(min="5", minMessage="Le titre de votre question doit contenir au moins 5 caractères")
      */
-    private $title;
+    private string $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Le contenu de votre question ne peut être vide")
      * @Assert\Length(min="10", minMessage="Le contenu de votre question doit contenir au moins 10 caractères")
      */
-    private $content;
+    private string $content;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isClosed = false;
+    private bool $isClosed = false;
 
     public function getId(): ?int
     {
