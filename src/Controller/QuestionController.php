@@ -19,7 +19,7 @@ class QuestionController extends AbstractController
     public function index(QuestionRepository $repository): Response
     {
         return $this->render('question/index.html.twig', [
-            'questions' => $repository->findAll()
+            'questions' => $repository->findAll(),
         ]);
     }
 
@@ -33,7 +33,7 @@ class QuestionController extends AbstractController
         }
 
         return $this->render('question/show.html.twig', [
-            'question' => $question
+            'question' => $question,
         ]);
     }
 
@@ -55,7 +55,33 @@ class QuestionController extends AbstractController
         }
 
         return $this->renderForm('question/create.html.twig', [
-            'form' => $form
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/question/edit/{id<[0-9]+>}", name="app_question_edit", methods={"GET", "PUT"})
+     */
+    public function edit(Request $request, EntityManagerInterface $em, Question $question): Response
+    {
+        if (null === $question) {
+            throw $this->createNotFoundException();
+        }
+
+        $form = $this->createForm(QuestionType::class, $question, [
+            'method' => 'PUT'
+        ])->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            $this->addFlash('success', 'Question éditée avec succès');
+
+            return $this->redirectToRoute('app_question_index');
+        }
+
+        return $this->renderForm('question/edit.html.twig', [
+            'question' => $question,
+            'form' => $form,
         ]);
     }
 }

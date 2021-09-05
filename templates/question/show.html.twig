@@ -3,8 +3,9 @@
 {% block title 'Steak Overflow - '~question.title %}
 
 {% block body %}
-    <div class="row">
-        <a class="btn btn-outline-dark ms-auto" href="{{ path('app_question_index') }}" style="width: 150px;">Retour</a>
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
+        <a class="btn btn-outline-primary my-1" href="{{ path('app_question_edit', {id:question.id}) }}">Editer la question</a>
+        <a class="btn btn-outline-dark my-1" href="{{ path('app_question_index') }}">Retour</a>
     </div>
     <div class="row mt-3">
         <div class="col-md-10 p-0 mx-auto card">
