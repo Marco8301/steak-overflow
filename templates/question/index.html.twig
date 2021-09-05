@@ -24,7 +24,7 @@
                                 {{ question.title }}
                             </a>
                         </h3>
-                        <p>{{ question.content }}</p>
+                        <p>{{ question.content|striptags|u.truncate(100, '...', false)|raw }}</p>
                     </div>
                 </article>
             {% endfor %}
