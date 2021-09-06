@@ -17,13 +17,7 @@
                        required>
 
                 <input type="hidden" name="_csrf_token"
-                       value="{{ csrf_token('authenticate') }}"
-                >
-{#                <div class="checkbox my-3">
-                    <label>
-                        <input type="checkbox" id="remember_me" name="_remember_me"> Se souvenir de moi
-                    </label>
-                </div>#}
+                       value="{{ csrf_token('authenticate') }}">
                 <button class="col-12 btn btn-lg btn-primary mt-3" type="submit">
                     Se connecter
                 </button>
