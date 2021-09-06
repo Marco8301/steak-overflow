@@ -56,6 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Veuillez renseigner un mot de passe")
+     * @Assert\Length(min="8", minMessage="Votre mot de passe doit contenir au moins 8 caractères")
      */
     private ?string $password;
 

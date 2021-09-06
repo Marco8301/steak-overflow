@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Inscription' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h1 class="text-center my-3">Inscription</h1>
+            {{ form_start(form) }}
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.lastName) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.password) }}
+            <button class="col-12 btn btn-primary btn-lg mt-3" type="submit">Confirmer</button>
+            {{ form_end(form) }}
+            <p class="text-center text-muted mt-5 mb-3">Déja membre ? <a href="{{ path('app_login') }}">Connectez-vous !</a></p>
+        </div>
+    </div>
+{% endblock %}
