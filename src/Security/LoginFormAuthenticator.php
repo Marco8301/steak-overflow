@@ -52,7 +52,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        $this->sessionService->setFlashMessage('success', 'Bienvenue ' . $token->getUserIdentifier());
+        $this->sessionService->setFlashMessage('success', 'Bienvenue !');
 
         return new RedirectResponse($this->urlGenerator->generate('app_question_index'));
     }

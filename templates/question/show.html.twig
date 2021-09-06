@@ -4,10 +4,12 @@
 
 {% block body %}
     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
-        <a class="btn btn-outline-primary my-1" href="{{ path('app_question_edit', {id:question.id}) }}">Editer la question</a>
+        <a class="btn btn-outline-primary my-1" href="{{ path('app_question_edit', {id:question.id}) }}">Editer la
+            question</a>
         <div class="js-form-delete-container me-sm-auto ms-2">
             <a class="js-button-delete btn btn-outline-danger" href="#">Supprimer la question</a>
-            <form class="js-form-delete d-none" action="{{ path('app_question_delete', {id: question.id}) }}" method="post">
+            <form class="js-form-delete d-none" action="{{ path('app_question_delete', {id: question.id}) }}"
+                  method="post">
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token('question.delete'~question.id) }}">
             </form>
@@ -19,6 +21,10 @@
             <h5 class="card-header">{{ question.title }}</h5>
             <div class="card-body py-3">
                 <p class="card-text">{{ question.content|raw }}</p>
+            </div>
+            <div class="ms-auto m-1 badge bg-{{ question.user is same as(app.user) ? 'primary' : 'secondary' }}">
+                <p class="p-0 m-0">{{ question.user.fullName }}</p>
+                <p class="p-0 mt-1 mx-0 mb-0 {{ question.user is same as(app.user) ? '' : 'd-none' }}">(Auteur)</p>
             </div>
         </div>
     </div>
