@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AnswerController extends AbstractController
 {
@@ -20,11 +21,18 @@ class AnswerController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $em, Question $question): Response
     {
-        $formData = $request->request->get('answer');
-        $answer = (new Answer())
-            ->setContent($formData['content'])
+        /**
+         * @var UserInterface $user
+         */
+        $user = $this->getUser();
+
+        $answer = new Answer();
+        $answerForm = $this->createForm(AnswerType::class, $answer)
+            ->handleRequest($request);
+
+        $answer->setContent($answerForm->get('content')->getData())
             ->setQuestion($question)
-            ->setUser($this->getUser())
+            ->setUser($user)
             ->setIsValid(false);
         $em->persist($answer);
         $em->flush();

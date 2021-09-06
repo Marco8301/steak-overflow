@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Answer;
 use App\Entity\Question;
 use App\Form\AnswerType;
 use App\Form\QuestionType;
@@ -41,8 +42,8 @@ class QuestionController extends AbstractController
         if (null == $question) {
             throw $this->createNotFoundException();
         }
-
-        $answerForm = $this->createForm(AnswerType::class, null, [
+        $answer = new Answer();
+        $answerForm = $this->createForm(AnswerType::class, $answer, [
             'action' => $this->generateUrl('app_answer_create', ['id' => $question->getId()])
         ]);
 
