@@ -6,7 +6,6 @@ use App\Entity\Answer;
 use App\Entity\Question;
 use App\Form\AnswerType;
 use App\Service\AnswerService;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,12 +25,15 @@ class AnswerController extends AbstractController
      * @Route("/answer/create/{id}", name="app_answer_create", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function create(Request $request, EntityManagerInterface $em, Question $question): Response
+    public function create(Request $request, Question $question): Response
     {
         $answer = new Answer();
         $answerForm = $this->createForm(AnswerType::class, $answer)
             ->handleRequest($request);
-        $this->service->createAnswer($answer, $answerForm->get('content')->getData(), $question);
+
+        if ($answerForm->isSubmitted() && $answerForm->isValid()) {
+            $this->service->createAnswer($answer, $answerForm->get('content')->getData(), $question);
+        }
 
         return $this->redirectToRoute('app_question_show', [
             'id' => $question->getId(),
@@ -61,6 +63,7 @@ class AnswerController extends AbstractController
     public function validateAnswer(Request $request, Answer $answer): Response
     {
         $question = $answer->getQuestion();
+        $this->denyAccessUnlessGranted('MANAGE_QUESTION', $question);
         if ($this->isCsrfTokenValid('answer.validate' . $answer->getId(), (string)$request->request->get('csrf_token'))) {
             $this->service->validateAnswer($answer, $question);
         }

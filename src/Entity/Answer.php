@@ -6,6 +6,7 @@ use App\Entity\Traits\TimestampableTrait;
 use App\Repository\AnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AnswerRepository::class)
@@ -24,7 +25,7 @@ class Answer
     /**
      * @ORM\Column(type="text")
      */
-    private string $content;
+    private ?string $content;
 
     /**
      * @ORM\Column(type="boolean")
@@ -53,7 +54,7 @@ class Answer
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
