@@ -93,7 +93,7 @@
       "@auto-scripts"
     ],
     "coding-standards": [
-      "vendor/bin/phpstan analyse -l 7 src tests && tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src"
+      "php -d memory_limit=-1 vendor/bin/phpstan analyse -l 7 src tests && tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src"
     ],
     "test": [
       "./vendor/bin/simple-phpunit tests"
