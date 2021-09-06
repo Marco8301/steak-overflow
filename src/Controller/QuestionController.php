@@ -7,6 +7,7 @@ use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
 use App\Service\QuestionService;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +48,7 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/question/create", name="app_question_create", methods={"GET", "POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -67,6 +69,7 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/question/edit/{id<[0-9]+>}", name="app_question_edit", methods={"GET", "PUT"})
+     * @IsGranted("MANAGE_QUESTION", subject="question")
      */
     public function edit(Request $request, Question $question): Response
     {
@@ -91,6 +94,7 @@ class QuestionController extends AbstractController
 
     /**
      * @Route("/question/delete/{id<[0-9]+>}", name="app_question_delete", methods={"GET", "DELETE"})
+     * @IsGranted("MANAGE_QUESTION", subject="question")
      */
     public function delete(Request $request, Question $question): Response
     {
