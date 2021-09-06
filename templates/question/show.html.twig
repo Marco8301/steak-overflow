@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="row mt-4">
-        <h2 class="text-center my-3">{{ question.answers|length }} Réponses</h2>
+        <h2 class="text-center my-3">{{ pluralize(question.answers|length, 'Réponse', 'Réponses') }}</h2>
         {% for answer in question.answers %}
             {% set answerIsValid = answer.isValid %}
             <div class="col-md-10 p-0 my-1 mx-auto card shadow {{ answerIsValid ? 'border-success' : '' }}">

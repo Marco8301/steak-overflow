@@ -15,7 +15,7 @@
                         <span class="badge bg-{{ question.isClosed ? 'success' : 'warning text-dark' }}">
                             {{ question.isClosed ? 'Résolue' : 'Ouverte' }}
                         </span>
-                        <h5>{{ question.answers|length }} Réponses</h5>
+                        <h5>{{ pluralize(question.answers|length, 'Réponse', 'Réponses') }}</h5>
                     </div>
                     <div class="col-12 col-sm-9 p-sm-3 my-sm-3 border rounded">
                         <h3>
