@@ -9,12 +9,12 @@ trait TimestampableTrait
     /**
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP" })
      */
-    private \DateTimeInterface $createdAt;
+    private ?\DateTimeInterface $createdAt = null;
 
     /**
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP" })
      */
-    private \DateTimeInterface $updatedAt;
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()
     {

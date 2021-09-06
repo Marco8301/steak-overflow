@@ -27,6 +27,6 @@ class UserService
         $user->setPassword($this->hasher->hashPassword($user, $password));
         $this->em->persist($user);
         $this->em->flush();
-        $this->sessionService->setFlashMessage("success", "Bienvenue dans la communauté Steak Overflow {$user->getFirstName()} {$user->getLastName()} ! Veuillez vous authentifier");
+        $this->sessionService->setFlashMessage("success", "Bienvenue dans la communauté Steak Overflow {$user->getFullName()} ! Veuillez vous authentifier");
     }
 }

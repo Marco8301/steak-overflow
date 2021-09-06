@@ -6,6 +6,7 @@ use App\Entity\Traits\SluggableTrait;
 use App\Entity\Traits\TimestampableTrait;
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -44,6 +45,12 @@ class Question
      */
     private bool $isClosed = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="questions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private UserInterface $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,6 +88,18 @@ class Question
     public function setIsClosed(bool $isClosed): self
     {
         $this->isClosed = $isClosed;
+
+        return $this;
+    }
+
+    public function getUser(): ?UserInterface
+    {
+        return $this->user;
+    }
+
+    public function setUser(?UserInterface $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

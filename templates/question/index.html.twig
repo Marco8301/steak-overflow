@@ -25,6 +25,7 @@
                             </a>
                         </h3>
                         <p>{{ question.content|striptags|u.truncate(100, '...', false)|raw }}</p>
+                        <small>Posté par : {{ question.user.fullName }}</small>
                     </div>
                 </article>
             {% endfor %}
