@@ -4,7 +4,6 @@ namespace App\Security;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -24,12 +23,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public const LOGIN_ROUTE = 'app_login';
 
     private UrlGeneratorInterface $urlGenerator;
-    private RequestStack $requestStack;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, RequestStack $requestStack)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;
-        $this->requestStack = $requestStack;
     }
 
     public function authenticate(Request $request): PassportInterface
@@ -38,8 +35,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
-            new UserBadge($email),
-            new PasswordCredentials($request->request->get('password', '')),
+            new UserBadge((string)$email),
+            new PasswordCredentials((string)$request->request->get('password', '')),
             [
                 new CsrfTokenBadge('authenticate', $request->get('_csrf_token')),
             ]
@@ -51,7 +48,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        $request->getSession()->getFlashBag()->add('success', 'Bienvenue ' . $token->getUserIdentifier());
+        $session = $request->getSession();
+        if (method_exists($session, 'getFlashBag')) {
+            $session->getFlashBag()->add('success', 'Bienvenue ' . $token->getUserIdentifier());
+        }
 
         return new RedirectResponse($this->urlGenerator->generate('app_question_index'));
     }
