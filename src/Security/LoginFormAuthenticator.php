@@ -2,11 +2,13 @@
 
 namespace App\Security;
 
+use App\Service\SessionService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
@@ -23,10 +25,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public const LOGIN_ROUTE = 'app_login';
 
     private UrlGeneratorInterface $urlGenerator;
+    private SessionService $sessionService;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator, SessionService $sessionService)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->sessionService = $sessionService;
     }
 
     public function authenticate(Request $request): PassportInterface
@@ -48,12 +52,17 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        $session = $request->getSession();
-        if (method_exists($session, 'getFlashBag')) {
-            $session->getFlashBag()->add('success', 'Bienvenue ' . $token->getUserIdentifier());
-        }
+        $this->sessionService->setFlashMessage('success', 'Bienvenue ' . $token->getUserIdentifier());
 
         return new RedirectResponse($this->urlGenerator->generate('app_question_index'));
+    }
+
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
+    {
+        $this->sessionService->setFlashMessage('danger', 'Identifiants invalides');
+        $url = $this->getLoginUrl($request);
+
+        return new RedirectResponse($url);
     }
 
     protected function getLoginUrl(Request $request): string
