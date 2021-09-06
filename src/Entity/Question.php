@@ -30,14 +30,14 @@ class Question
      * @Assert\NotBlank(message="Le titre de votre question ne peut être vide")
      * @Assert\Length(min="5", minMessage="Le titre de votre question doit contenir au moins 5 caractères")
      */
-    private string $title;
+    private ?string $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Le contenu de votre question ne peut être vide")
      * @Assert\Length(min="10", minMessage="Le contenu de votre question doit contenir au moins 10 caractères")
      */
-    private string $content;
+    private ?string $content;
 
     /**
      * @ORM\Column(type="boolean")
