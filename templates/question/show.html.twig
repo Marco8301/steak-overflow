@@ -19,15 +19,36 @@
         <a class="btn btn-outline-dark my-1 ms-auto" href="{{ path('app_question_index') }}">Retour</a>
     </div>
     <div class="row mt-3">
-        <div class="col-md-10 p-0 mx-auto card">
+        <div class="col-md-10 p-0 mx-auto card shadow">
             <h5 class="card-header">{{ question.title }}</h5>
             <div class="card-body py-3">
                 <p class="card-text">{{ question.content|raw }}</p>
             </div>
             <div class="ms-auto m-1 badge bg-{{ question.user is same as(app.user) ? 'primary' : 'secondary' }}">
                 <p class="p-0 m-0">{{ question.user.fullName }}</p>
-                <p class="p-0 mt-1 mx-0 mb-0 {{ question.user is same as(app.user) ? '' : 'd-none' }}">(Auteur)</p>
+                <p class="p-0 mt-1 mx-0 mb-0 {{ question.user is same as(app.user) ? '' : 'd-none' }}">(vous)</p>
             </div>
         </div>
     </div>
+    <div class="row mt-5">
+        {% for answer in question.answers %}
+            <div class="col-md-10 p-0 my-1 mx-auto card shadow">
+                <div class="card-body py-3">
+                    <p class="card-text">{{ answer.content|raw }}</p>
+                </div>
+                <div class="ms-auto m-1 badge bg-{{ answer.user is same as(app.user) ? 'primary' : 'secondary' }}">
+                    <p class="p-0 m-0">{{ answer.user.fullName }}</p>
+                    <p class="p-0 mt-1 mx-0 mb-0 {{ answer.user is same as(app.user) ? '' : 'd-none' }}">(vous)</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="row mt-5">
+            <div class="col-md-10 mx-auto">
+                <h4 class="text-center">Vous avez réponse à cette question ?</h4>
+                {{ include('partials/_answer_form.html.twig' ) }}
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

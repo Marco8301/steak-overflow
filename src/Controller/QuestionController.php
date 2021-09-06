@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Answer;
 use App\Entity\Question;
+use App\Form\AnswerType;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
 use App\Service\QuestionService;
@@ -40,9 +42,14 @@ class QuestionController extends AbstractController
         if (null == $question) {
             throw $this->createNotFoundException();
         }
+        $answer = new Answer();
+        $answerForm = $this->createForm(AnswerType::class, $answer, [
+            'action' => $this->generateUrl('app_answer_create', ['id' => $question->getId()])
+        ]);
 
-        return $this->render('question/show.html.twig', [
+        return $this->renderForm('question/show.html.twig', [
             'question' => $question,
+            'answerForm' => $answerForm
         ]);
     }
 
