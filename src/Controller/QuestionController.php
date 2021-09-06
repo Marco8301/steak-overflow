@@ -90,7 +90,10 @@ class QuestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->service->updateQuestion();
 
-            return $this->redirectToRoute('app_question_index');
+            return $this->redirectToRoute('app_question_show', [
+                'id' => $question->getId(),
+                'slug' => $question->getSlug(),
+            ]);
         }
 
         return $this->renderForm('question/edit.html.twig', [
