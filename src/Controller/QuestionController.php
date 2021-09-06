@@ -9,6 +9,7 @@ use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
 use App\Service\QuestionService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,10 +28,16 @@ class QuestionController extends AbstractController
     /**
      * @Route("/", name="app_question_index", methods={"GET"})
      */
-    public function index(QuestionRepository $repository): Response
+    public function index(Request $request, QuestionRepository $repository, PaginatorInterface $paginator): Response
     {
+        $questions = $paginator->paginate(
+            $repository->findBy([], ['isClosed' => 'ASC']),
+            $request->query->getInt('page', 1),
+            4
+        );
+
         return $this->render('question/index.html.twig', [
-            'questions' => $repository->findBy([], ['isClosed' => 'ASC']),
+            'questions' => $questions,
         ]);
     }
 
