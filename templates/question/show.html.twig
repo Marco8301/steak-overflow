@@ -34,8 +34,17 @@
         {% for answer in question.answers %}
             <div class="col-md-10 p-0 my-1 mx-auto card shadow">
                 <div class="card-body py-3">
+                    <div class="js-form-delete-container float-end">
+                        <a class="js-button-delete btn btn-sm btn-outline-danger" href="#" data-reload="true">Delete</a>
+                        <form class="js-form-delete d-none" action="{{ path('app_answer_delete', {id: answer.id}) }}"
+                              method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token('answer.delete'~answer.id) }}">
+                        </form>
+                    </div>
                     <p class="card-text">{{ answer.content|raw }}</p>
                 </div>
+
                 <div class="ms-auto m-1 badge bg-{{ answer.user is same as(app.user) ? 'primary' : 'secondary' }}">
                     <p class="p-0 m-0">{{ answer.user.fullName }}</p>
                     <p class="p-0 mt-1 mx-0 mb-0 {{ answer.user is same as(app.user) ? '' : 'd-none' }}">(vous)</p>

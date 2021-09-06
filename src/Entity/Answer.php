@@ -29,7 +29,7 @@ class Answer
     /**
      * @ORM\Column(type="boolean")
      */
-    private bool $isValid;
+    private bool $isValid = false;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="answers")

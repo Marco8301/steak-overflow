@@ -27,7 +27,7 @@ class QuestionService
         $question->setUser($this->security->getUser());
         $this->em->persist($question);
         $this->em->flush();
-        $this->sessionService->setFlashMessage('success', 'Question ajoutée avec succès');
+        $this->sessionService->setFlashMessage('success', 'Question créée avec succès');
     }
 
     public function updateQuestion(): void
