@@ -41,6 +41,7 @@
                     sélectionnée comme étant la plus pertinente par l'auteur de
                     la question</h5>
                 <div class="card-body py-3">
+                    <small class="small text-muted">{{ answer.createdAt|ago }}</small>
                     {% if is_granted('MANAGE_ANSWER', answer) %}
                         <div class="js-form-container float-end {{ answerIsValid ? 'd-none' : '' }}">
                             <a class="js-form-button btn btn-sm btn-outline-danger" href="#">X</a>
