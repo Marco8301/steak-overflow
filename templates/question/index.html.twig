@@ -28,9 +28,12 @@
                         <small>Posté par : {{ question.user.fullName }}</small>
                     </div>
                 </article>
-                {% else %}
+            {% else %}
                 <p class="text-center mt-5">Il n'y a actuellement aucune question.</p>
             {% endfor %}
         </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        {{ knp_pagination_render(questions) }}
     </div>
 {% endblock %}
