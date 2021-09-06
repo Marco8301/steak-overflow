@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
+use App\Service\QuestionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class QuestionController extends AbstractController
 {
+    private QuestionService $service;
+
+    public function __construct(QuestionService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * @Route("/", name="app_question_index", methods={"GET"})
      */
@@ -47,9 +55,7 @@ class QuestionController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($question);
-            $em->flush();
-            $this->addFlash('success', 'Question ajoutée avec succès');
+            $this->service->createQuestion($question);
 
             return $this->redirectToRoute('app_question_index');
         }
@@ -62,19 +68,17 @@ class QuestionController extends AbstractController
     /**
      * @Route("/question/edit/{id<[0-9]+>}", name="app_question_edit", methods={"GET", "PUT"})
      */
-    public function edit(Request $request, EntityManagerInterface $em, Question $question): Response
+    public function edit(Request $request, Question $question): Response
     {
         if (null == $question) {
             throw $this->createNotFoundException();
         }
-
         $form = $this->createForm(QuestionType::class, $question, [
             'method' => 'PUT'
         ])->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            $this->addFlash('success', 'Question éditée avec succès');
+            $this->service->updateQuestion();
 
             return $this->redirectToRoute('app_question_index');
         }
@@ -88,16 +92,14 @@ class QuestionController extends AbstractController
     /**
      * @Route("/question/delete/{id<[0-9]+>}", name="app_question_delete", methods={"GET", "DELETE"})
      */
-    public function delete(Request $request, EntityManagerInterface $em, Question $question): Response
+    public function delete(Request $request, Question $question): Response
     {
         if (null == $question) {
             throw $this->createNotFoundException();
         }
 
         if ($this->isCsrfTokenValid('question.delete' . $question->getId(), (string)$request->request->get('csrf_token'))) {
-            $em->remove($question);
-            $em->flush();
-            $this->addFlash('success', 'Question supprimée avec succès');
+            $this->service->deleteQuestion($question);
         }
 
         return $this->redirectToRoute('app_question_index');
