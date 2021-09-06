@@ -60,7 +60,7 @@ class Answer
         return $this;
     }
 
-    public function getIsValid(): ?bool
+    public function IsValid(): ?bool
     {
         return $this->isValid;
     }

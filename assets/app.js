@@ -9,7 +9,7 @@
 import './styles/app.scss';
 
 // JS Imports
-import './js/form-delete';
+import './js/form-submit';
 
 // other imports
 import { Tooltip, Toast, Popover } from 'bootstrap';

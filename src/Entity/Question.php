@@ -93,7 +93,7 @@ class Question
         return $this;
     }
 
-    public function getIsClosed(): ?bool
+    public function IsClosed(): ?bool
     {
         return $this->isClosed;
     }

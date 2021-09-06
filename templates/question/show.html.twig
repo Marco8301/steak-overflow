@@ -3,13 +3,15 @@
 {% block title 'Steak Overflow - '~question.title %}
 
 {% block body %}
+    {% set questionIsClosed = question.isClosed %}
     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
         {% if is_granted('MANAGE_QUESTION', question) %}
-            <a class="btn btn-outline-primary my-1" href="{{ path('app_question_edit', {id:question.id}) }}">Editer la
+            <a class="btn btn-outline-primary my-1 {{ questionIsClosed ? 'd-none' : '' }}"
+               href="{{ path('app_question_edit', {id: question.id}) }}">Editer la
                 question</a>
-            <div class="js-form-delete-container me-sm-auto ms-2">
-                <a class="js-button-delete btn btn-outline-danger" href="#">Supprimer la question</a>
-                <form class="js-form-delete d-none" action="{{ path('app_question_delete', {id: question.id}) }}"
+            <div class="js-form-container me-sm-auto ms-2">
+                <a class="js-form-button btn btn-outline-danger" href="#">Supprimer la question</a>
+                <form class="js-form d-none" action="{{ path('app_question_delete', {id: question.id}) }}"
                       method="post">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token('question.delete'~question.id) }}">
@@ -30,32 +32,52 @@
             </div>
         </div>
     </div>
-    <div class="row mt-5">
+    <div class="row mt-4">
+        <h2 class="text-center my-3">{{ question.answers|length }} Réponses</h2>
         {% for answer in question.answers %}
-            <div class="col-md-10 p-0 my-1 mx-auto card shadow">
+            {% set answerIsValid = answer.isValid %}
+            <div class="col-md-10 p-0 my-1 mx-auto card shadow {{ answerIsValid ? 'border-success' : '' }}">
+                <h5 class="card-header bg-success text-white {{ answerIsValid ? '' : 'd-none' }}">Cette réponse a été
+                    sélectionnée comme étant la plus pertinente par l'auteur de
+                    la question</h5>
                 <div class="card-body py-3">
                     {% if is_granted('MANAGE_ANSWER', answer) %}
-                    <div class="js-form-delete-container float-end">
-                        <a class="js-button-delete btn btn-sm btn-outline-danger" href="#" data-reload="true">X</a>
-                        <form class="js-form-delete d-none" action="{{ path('app_answer_delete', {id: answer.id}) }}"
-                              method="post">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token('answer.delete'~answer.id) }}">
-                        </form>
-                    </div>
+                        <div class="js-form-container float-end {{ answerIsValid ? 'd-none' : '' }}">
+                            <a class="js-form-button btn btn-sm btn-outline-danger" href="#">X</a>
+                            <form class="js-form d-none"
+                                  action="{{ path('app_answer_delete', {id: answer.id}) }}"
+                                  method="post">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="csrf_token"
+                                       value="{{ csrf_token('answer.delete'~answer.id) }}">
+                            </form>
+                        </div>
+                    {% endif %}
+                    {% if is_granted('MANAGE_QUESTION', question) %}
+                        <div class="js-form-container float-end {{ questionIsClosed ? 'd-none' : '' }}">
+                            <a class="js-form-button btn btn-sm btn-outline-success mx-2" href="#">Valider</a>
+                            <form class="js-form d-none"
+                                  action="{{ path('app_answer_validate', {id: answer.id}) }}"
+                                  method="post">
+                                <input type="hidden" name="_method" value="PUT">
+                                <input type="hidden" name="csrf_token"
+                                       value="{{ csrf_token('answer.validate'~answer.id) }}">
+                            </form>
+                        </div>
                     {% endif %}
                     <p class="card-text">{{ answer.content|raw }}</p>
                 </div>
-
                 <div class="ms-auto m-1 badge bg-{{ answer.user is same as(app.user) ? 'primary' : 'secondary' }}">
                     <p class="p-0 m-0">{{ answer.user.fullName }}</p>
                     <p class="p-0 mt-1 mx-0 mb-0 {{ answer.user is same as(app.user) ? '' : 'd-none' }}">(vous)</p>
                 </div>
             </div>
+        {% else %}
+            <p class="text-center"> Il n'y a actuellement aucune réponse à cette question</p>
         {% endfor %}
     </div>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <div class="row mt-5">
+        <div class="row mt-5 {{ questionIsClosed ? 'd-none' }}">
             <div class="col-md-10 mx-auto">
                 <h4 class="text-center">Vous avez réponse à cette question ?</h4>
                 {{ include('partials/_answer_form.html.twig' ) }}
