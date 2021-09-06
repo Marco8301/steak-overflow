@@ -10,16 +10,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_question_index') }}">Questions</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_question_create') }}">Nouvelle Question</a>
-                </li>
                 {% if app.user %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
+                        <a class="nav-link" href="{{ path('app_question_create') }}">Nouvelle Question</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
+                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Inscription</a>
