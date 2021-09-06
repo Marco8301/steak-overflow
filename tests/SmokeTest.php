@@ -33,5 +33,6 @@ class SmokeTest extends WebTestCase
         yield ['/question/create'];
         yield ['/login'];
         yield ['/logout'];
+        yield ['/register'];
     }
 }
