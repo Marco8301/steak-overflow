@@ -94,7 +94,7 @@ class QuestionController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if ($this->isCsrfTokenValid('question.delete' . $question->getId(), (string) $request->request->get('csrf_token'))) {
+        if ($this->isCsrfTokenValid('question.delete' . $question->getId(), (string)$request->request->get('csrf_token'))) {
             $em->remove($question);
             $em->flush();
             $this->addFlash('success', 'Question supprimée avec succès');
