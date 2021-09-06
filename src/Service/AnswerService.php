@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service;
-
 
 use App\Entity\Answer;
 use App\Entity\Question;
@@ -19,8 +17,7 @@ class AnswerService
         EntityManagerInterface $em,
         SessionService $sessionService,
         Security $security
-    )
-    {
+    ) {
         $this->em = $em;
         $this->sessionService = $sessionService;
         $this->security = $security;

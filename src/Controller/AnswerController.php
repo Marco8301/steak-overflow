@@ -41,6 +41,7 @@ class AnswerController extends AbstractController
 
     /**
      * @Route("/answer/delete/{id<[0-9]+>}", name="app_answer_delete", methods={"DELETE"})
+     * @IsGranted("MANAGE_ANSWER", subject="answer")
      */
     public function delete(Request $request, Answer $answer): Response
     {
