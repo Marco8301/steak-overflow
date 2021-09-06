@@ -23,7 +23,7 @@ class AnswerService
         $this->security = $security;
     }
 
-    public function createAnswer(Answer $answer, string $content, Question $question): void
+    public function createAnswer(Answer $answer, ?string $content, Question $question): void
     {
         $answer->setUser($this->security->getUser())
             ->setContent($content)
