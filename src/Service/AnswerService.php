@@ -39,4 +39,11 @@ class AnswerService
         $this->em->flush();
         $this->sessionService->setFlashMessage('success', 'Réponse supprimée avec succès');
     }
+
+    public function validateAnswer(Answer $answer, Question $question): void
+    {
+        $question->setIsClosed(true);
+        $answer->setIsValid(true);
+        $this->em->flush();
+    }
 }

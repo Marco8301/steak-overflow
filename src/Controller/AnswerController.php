@@ -54,4 +54,20 @@ class AnswerController extends AbstractController
             'slug' => $answer->getQuestion()->getSlug()
         ]);
     }
+
+    /**
+     * @Route("/answer/validate/{id<[0-9]+>}", name="app_answer_validate", methods={"PUT"})
+     */
+    public function validateAnswer(Request $request, Answer $answer): Response
+    {
+        $question = $answer->getQuestion();
+        if ($this->isCsrfTokenValid('answer.validate' . $answer->getId(), (string)$request->request->get('csrf_token'))) {
+            $this->service->validateAnswer($answer, $question);
+        }
+
+        return $this->redirectToRoute('app_question_show', [
+            'id' => $question->getId(),
+            'slug' => $question->getSlug(),
+        ]);
+    }
 }
