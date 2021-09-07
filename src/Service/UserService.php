@@ -29,4 +29,10 @@ class UserService
         $this->em->flush();
         $this->sessionService->setFlashMessage("success", "Bienvenue dans la communauté Steak Overflow {$user->getFullName()} ! Veuillez vous authentifier");
     }
+
+    public function updateUser(): void
+    {
+        $this->em->flush();
+        $this->sessionService->setFlashMessage('success', 'Utilisateur édité avec succès');
+    }
 }
