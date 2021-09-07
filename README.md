@@ -4,9 +4,14 @@ Steak Overflow is a spoof of Stack Overflow.
 
 Using Steak Overflow, you will be able to ask any question about your steak, see the answers of our loving community, and select the answer you judge is the most accurate.
 
+## Requirements
+* MySQL 5.7 or higher
+* PHP 7.4 or higher
+
 ## Installation
 
 * `cd` to the folder of your choice and do a `git clone`
+* You may want to check the `.env` file and enter your MySQL credentials for `DATABASE_URL`
 * Install project
 
 ```bash
