@@ -1,1 +1,12 @@
 @import "~bootstrap/scss/bootstrap";
+
+.vich-image {
+
+  .form-check {
+    @extend .my-2
+  }
+
+  img {
+    @extend .mb-2, .rounded, .shadow, .img-thumbnail
+  }
+}
