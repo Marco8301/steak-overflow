@@ -6,7 +6,7 @@ Using Steak Overflow, you will be able to ask any question about your steak, see
 
 ## Installation
 
-* `cd` to the folder of your choice and o a `git clone`
+* `cd` to the folder of your choice and do a `git clone`
 * Install project
 
 ```bash
@@ -24,7 +24,7 @@ symfony server:start
 
 ## Usage
 
-* The landing page lists all the questions, open question first, then closed questions.
+* The landing page lists all the questions, open questions first, then closed questions.
 * To create a question you need to be logged in, register, then log-in
 * You can also answer existing questions
 * Only the author of the question can select an answer and mark it as valid, this makes the question closed, and no more answers can be posted
