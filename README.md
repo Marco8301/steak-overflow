@@ -13,6 +13,7 @@ Using Steak Overflow, you will be able to ask any question about your steak, see
 composer install
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
 php bin/console assets:install // Install assets as hard copies
 yarn install
 yarn dev

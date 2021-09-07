@@ -12,6 +12,7 @@
     "doctrine/doctrine-bundle": "^2.4",
     "doctrine/doctrine-migrations-bundle": "^3.1",
     "doctrine/orm": "^2.9",
+    "fakerphp/faker": "^1.16",
     "friendsofsymfony/ckeditor-bundle": "^2.3",
     "knplabs/knp-paginator-bundle": "5.6.0",
     "knplabs/knp-time-bundle": "^1.16",
@@ -49,6 +50,7 @@
     "twig/twig": "^2.12|^3.0"
   },
   "require-dev": {
+    "doctrine/doctrine-fixtures-bundle": "^3.4",
     "phpstan/extension-installer": "^1.1",
     "phpstan/phpstan": "^0.12.98",
     "phpunit/phpunit": "^9.5",
@@ -95,7 +97,7 @@
       "@auto-scripts"
     ],
     "coding-standards": [
-      "php -d memory_limit=-1 vendor/bin/phpstan analyse -l 7 src tests && tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src"
+      "php -d memory_limit=-1 vendor/bin/phpstan analyse -l 6 src tests && tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src"
     ],
     "test": [
       "./vendor/bin/simple-phpunit tests"
