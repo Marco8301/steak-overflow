@@ -10,8 +10,9 @@
 <body>
 {{ include('partials/_nav.html.twig') }}
 {{ include('partials/_flash.html.twig') }}
-<div class="container mt-5 px-4">
+<main role="main" class="container mt-5 px-4">
     {% block body %}{% endblock %}
-</div>
+</main>
+{{ include('partials/_footer.html.twig') }}
 </body>
 </html>
