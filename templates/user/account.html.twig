@@ -8,6 +8,13 @@
             <div class="card shadow">
                 <div class="card-body py-3">
                     <h1 class="my-3">Mon compte</h1>
+                    {% if app.user.imageName %}
+                        <div class="mw-100 overflow-hidden rounded-top">
+                            <img src="{{ vich_uploader_asset(app.user)| imagine_filter('squared_thumbnail_small') }}"
+                                 alt="{{ app.user.fullName }}"
+                                 class="rounded-circle w-50">
+                        </div>
+                    {% endif %}
                     <p class="mt-4 lead">{{ app.user.email }}</p>
                     <h2>{{ app.user.fullName }}</h2>
                     <div class="row my-5 px-3">

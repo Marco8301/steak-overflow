@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserType extends AbstractType
 {
@@ -33,7 +34,16 @@ class UserType extends AbstractType
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmation du mot de passe'],
             ]);
-        };
+        } else {
+            $builder->add('imageFile', VichImageType::class, [
+                'label' => 'Image (JPG ou PNG)',
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimmer l\'image',
+                'download_uri' => false,
+                'asset_helper' => true,
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
