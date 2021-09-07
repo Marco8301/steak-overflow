@@ -31,7 +31,10 @@ class QuestionController extends AbstractController
     public function index(Request $request, QuestionRepository $repository, PaginatorInterface $paginator): Response
     {
         $questions = $paginator->paginate(
-            $repository->findBy([], ['isClosed' => 'ASC']),
+            $repository->findBy([], [
+                'isClosed' => 'ASC',
+                'createdAt' => 'DESC',
+            ]),
             $request->query->getInt('page', 1),
             4
         );
